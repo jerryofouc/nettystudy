@@ -1,4 +1,4 @@
-package io.github.jerryofouc;
+package io.github.jerryofouc.time;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -10,16 +10,16 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhangxiaojie
- * Date: 5/23/14
- * Time: 16:52
- * To change this template use File | Settings | File Templates.
+ * 功能介绍：
+ *
+ * @author zhangxiaojie
+ *         Date:  9/28/14
+ *         Time: 17:32
  */
-public class DiscardServer {
+public class TimeServer {
     private int port;
 
-    public DiscardServer(int port) {
+    public TimeServer(int port) {
         this.port = port;
     }
 
@@ -33,7 +33,7 @@ public class DiscardServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new DiscardServerHandler());
+                            ch.pipeline().addLast(new TimeEncoder()).addLast(new TimeServerHandler());
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)          // (5)
@@ -59,6 +59,10 @@ public class DiscardServer {
         } else {
             port = 8080;
         }
-        new DiscardServer(port).run();
+        new TimeServer(port).run();
     }
+
+
+
+
 }
